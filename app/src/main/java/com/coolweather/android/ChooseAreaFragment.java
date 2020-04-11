@@ -24,6 +24,7 @@ import com.coolweather.android.util.Utility;
 import com.example.coolweather.R;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
@@ -59,14 +60,12 @@ public class ChooseAreaFragment extends Fragment {
     private int currentLevel;
 
 
-    public ChooseAreaFragment() {
-        // Required empty public constructor
-    }
 
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.choose_area, container, false);
         titleText = view.findViewById(R.id.title_text);
         backButton = view.findViewById(R.id.back_button);
@@ -75,7 +74,7 @@ public class ChooseAreaFragment extends Fragment {
         listView.setAdapter(adapter);
         return view;
     }
-
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
@@ -97,14 +96,14 @@ public class ChooseAreaFragment extends Fragment {
                 if (currentLevel == LEVEL_COUNTY) {
                     queryCities();
                 } else if (currentLevel == LEVEL_CITY) {
-                    queryCounties();
+                    queryProvinces();
                 }
             }
         });
-        queryProvince();
+        queryProvinces();
     }
 
-    private void queryProvince() {
+    private void queryProvinces() {
         titleText.setText("中国");
         backButton.setVisibility(View.GONE);
         provinceList = DataSupport.findAll(Province.class);
@@ -200,7 +199,7 @@ public class ChooseAreaFragment extends Fragment {
                         public void run() {
                             closeProgressDialog();
                             if("province".equals(type)){
-                                queryProvince();
+                                queryProvinces();
                             }
                             else if("city".equals(type)){
                                 queryCities();
