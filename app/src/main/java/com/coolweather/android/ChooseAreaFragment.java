@@ -25,6 +25,7 @@ import com.example.coolweather.R;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.litepal.LitePal;
 import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
@@ -40,7 +41,7 @@ import okhttp3.Response;
  */
 public class ChooseAreaFragment extends Fragment {
 
-    public static final int LEVEL_PROVINVE = 0;
+    public static final int LEVEL_PROVINCE = 0;
     public static final int LEVEL_CITY = 1;
     public static final int LEVEL_COUNTY = 2;
 
@@ -59,7 +60,9 @@ public class ChooseAreaFragment extends Fragment {
     private City selectedCity;
     private int currentLevel;
 
+    public ChooseAreaFragment(){
 
+    }
 
 
     @Nullable
@@ -81,7 +84,7 @@ public class ChooseAreaFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (currentLevel == LEVEL_PROVINVE) {
+                if (currentLevel == LEVEL_PROVINCE) {
                     selectedProvince = provinceList.get(position);
                     queryCities();
                 } else if (currentLevel == LEVEL_CITY) {
@@ -115,10 +118,10 @@ public class ChooseAreaFragment extends Fragment {
             }
             adapter.notifyDataSetChanged();
             listView.setSelection(0);
-            currentLevel = LEVEL_PROVINVE;
+            currentLevel = LEVEL_PROVINCE;
         }
     else{
-            String address = "http://goulin.tech/api/china";
+            String address = "http://guolin.tech/api/china";
             queryFromServer(address,"province");
         }
     }
@@ -139,7 +142,7 @@ public class ChooseAreaFragment extends Fragment {
         }
     else{
             int provinceCode = selectedProvince.getProvinceCode();
-            String address = "http://goulin.tech/api/china/"+provinceCode;
+            String address = "http://guolin.tech/api/china/"+provinceCode;
             queryFromServer(address,"city");
         }
     }
@@ -161,7 +164,7 @@ public class ChooseAreaFragment extends Fragment {
     else{
             int provinceCode = selectedProvince.getProvinceCode();
             int cityCode = selectedCity.getCityCode();
-            String address = "http://goulin.tech/api/china/"+provinceCode+"/"+cityCode;
+            String address = "http://guolin.tech/api/china/"+provinceCode+"/"+cityCode;
             queryFromServer(address,"county");
         }
     }
